@@ -1,0 +1,54 @@
+# ─────────────────────────────────────────────
+#  BookMyShow Seat-Sniper Agent — Configuration
+# ─────────────────────────────────────────────
+
+movie:
+  name: "Pushpa 2"                          # Used for logging & Telegram messages
+  release_date: "2025-01-10"               # YYYY-MM-DD — drives fast-poll during week 1
+  url: "https://in.bookmyshow.com/buytickets/pushpa-2-hyderabad/ET00387318"
+
+theatres:
+  - name: "PVR INOX GVK One"
+  - name: "AMB Cinemas"
+  - name: "Prasads IMAX"
+  # Add more theatre names exactly as they appear on BMS
+
+shows:
+  dates:
+    - "2025-01-15"
+    - "2025-01-16"
+  times:                                    # Acceptable show times (partial match)
+    - "09:30 AM"
+    - "10:00 AM"
+    - "07:00 PM"
+    - "07:30 PM"
+
+seats:
+  categories:                              # Category labels on BMS (partial match ok)
+    - "RECLINER"
+    - "GOLD"
+    - "PREMIUM"
+  preferred_rows:                          # Row letters in priority order
+    - ["A", "B", "C"]                      # First choice: rows A-C
+    - ["D", "E", "F"]                      # Second choice
+    - ["G", "H", "I"]                      # Third choice (fallback)
+  min_consecutive: 2                       # Minimum consecutive seats needed
+  max_consecutive: 4                       # Maximum to look for
+
+polling:
+  interval_normal_sec: 45                  # Poll interval outside week-1
+  interval_week1_sec: 10                   # Poll interval during first week of release
+  week1_rows_only: true                    # During week-1, only alert for preferred_rows[0]
+
+telegram:
+  bot_token: "YOUR_BOT_TOKEN_HERE"        # From @BotFather
+  chat_id: "YOUR_CHAT_ID_HERE"            # Your personal chat ID
+
+notifications:
+  alert_on_any_match: true               # Alert even if not preferred row
+  repeat_alert_interval_sec: 120          # Re-alert if seats still available
+  open_browser_on_match: true            # Auto-open BMS in browser on match
+
+logging:
+  level: "INFO"                           # DEBUG | INFO | WARNING
+  log_file: "bms_agent.log"
